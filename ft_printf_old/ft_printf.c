@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
 
 void	ft_putchar(char c)
 {
@@ -249,6 +248,54 @@ char	*ft_hex_itoa(unsigned int n, char *base)
 	return (dest);
 }
 
+static int	ft_point_intlen(unsigned long n)
+{
+	int	i;
+
+	i = 0;
+	while (n >= 16)
+	{
+		n = (n / 16);
+		i++;
+	}
+	return (i);
+}
+
+static unsigned long	ft_point_div(unsigned long n, int len)
+{
+	while (len)
+	{
+		n = (n / 16);
+		len--;
+	}
+	return (n);
+}
+
+char	*ft_point_itoa(unsigned long n, char *base)
+{
+	int		i;
+	int		len;
+	int		len2;
+	char	*dest;
+
+	len = ft_point_intlen(n);
+	len2 = len + 2;
+	dest = (char *) malloc (sizeof(char) * (len + 3));
+	if (dest == NULL)
+		return (NULL);
+	dest[0] = '0';
+	dest[1] = 'x';
+	i = 2;
+	while (i <= len2)
+	{
+		dest[i] = base[((ft_point_div(n, len)) % 16)];
+		len--;
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 char	*ft_assign(const char *str, int j, va_list args)
 {
 	char	*dst;
@@ -261,8 +308,8 @@ char	*ft_assign(const char *str, int j, va_list args)
 	}
 	else if (str[j] == 's')
 		dst = va_arg(args, char *);
-	//else if (str[j] == 'p')
-		//void pointer address in hexadecimal
+	else if (str[j] == 'p')
+		dst = ft_point_itoa(va_arg(args, unsigned long), "0123456789abcdef");
 	else if (str[j] == 'd' || str[j] == 'i')
 		dst = ft_itoa(va_arg(args, int));
 	else if (str[j] == 'u')
@@ -314,17 +361,17 @@ int	ft_printf(const char *str, ...)
 	va_end(args);
 	return (ft_strlen(dst));
 }
-
+/*
 int	main()
 {
 	const char	*str = "abcde";
 	char ch;
 	int	num = 123;
-	unsigned int un = -456;
+	unsigned int un = 5544;
 
 	ch = 'a';
-	ft_printf("stampami :\n %i\n %d\n %%\n %c\n %s\n %u\n %x\n %X\n", num, num, ch, str, un, un, un);
-	//printf("Printf : %X\n", un);
-	//ft_printf("My Printf : %X\n", un);
+	ft_printf("stampami :\n %p\n %i\n %d\n %c\n %s\n %x\n %X\n %u\n", str, num, num, ch, str, un, un, un);
+	//printf("Printf : %p\n", str);
+	//ft_printf("My Printf : %p\n", str);
 	return (0);
-}
+}*/

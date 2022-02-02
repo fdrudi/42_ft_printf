@@ -17,11 +17,22 @@ static int	ft_hex_intlen(unsigned int n)
 	int	i;
 
 	i = 0;
-	while ((n / 16) >= 0)
+	while (n >= 16)
 	{
+		n = (n / 16);
 		i++;
 	}
 	return (i);
+}
+
+static unsigned int	ft_hex_div(unsigned int n, int len)
+{
+	while (len)
+	{
+		n = (n / 16);
+		len--;
+	}
+	return (n);
 }
 
 char	*ft_hex_itoa(unsigned int n, char *base)
@@ -37,9 +48,9 @@ char	*ft_hex_itoa(unsigned int n, char *base)
 	dest = (char *) malloc (sizeof(char) * (len + 1));
 	if (dest == NULL)
 		return (NULL);
-	while (len)
+	while (i <= len2)
 	{
-		dest[len] = base[((n / 16) % 16)];
+		dest[i] = base[((ft_hex_div(n, len)) % 16)];
 		len--;
 		i++;
 	}
