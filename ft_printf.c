@@ -202,6 +202,52 @@ char	*ft_unsigned_itoa(unsigned int n)
 	return (dest);
 }
 
+static int	ft_hex_intlen(unsigned int n)
+{
+	int	i;
+
+	i = 0;
+	while (n >= 16)
+	{
+		//printf("%u\n", n);
+		n = (n / 16);
+		i++;
+	}
+	return (i);
+}
+
+static unsigned int	ft_hex_div(unsigned int n, int len)
+{
+	while (len)
+	{
+		n = (n / 16);
+		len--;
+	}
+	return (n);
+}
+
+char	*ft_hex_itoa(unsigned int n, char *base)
+{
+	int		i;
+	int		len;
+	int		len2;
+	char	*dest;
+
+	i = 0;
+	len = ft_hex_intlen(n);
+	len2 = len;
+	dest = (char *) malloc (sizeof(char) * (len + 1));
+	if (dest == NULL)
+		return (NULL);
+	while (i <= len2)
+	{
+		dest[i] = base[((ft_hex_div(n, len)) % 16)];
+		len--;
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
 
 char	*ft_assign(const char *str, int j, va_list args)
 {
@@ -221,10 +267,10 @@ char	*ft_assign(const char *str, int j, va_list args)
 		dst = ft_itoa(va_arg(args, int));
 	else if (str[j] == 'u')
 		dst = ft_unsigned_itoa(va_arg(args, unsigned int));
-	//else if (str[j] == 'x')
-		//hexadecimal number in lowercase format
-	//else if (str[j] == 'X')
-		//hexadedimal numbers in uppercase format
+	else if (str[j] == 'x')
+		dst = ft_hex_itoa(va_arg(args, unsigned int), "0123456789abcdef");
+	else if (str[j] == 'X')
+		dst = ft_hex_itoa(va_arg(args, unsigned int), "0123456789ABCDEF");
 	else if (str[j] == '%')
 	{
 		dst = (char *) malloc (sizeof(char) * 2);
@@ -245,7 +291,7 @@ int	ft_printf(const char *str, ...)
 
 	j = 0;
 	i = 0;
-	dst = (char *) malloc (ft_strlen(str) + 1);
+	dst = (char *) malloc (sizeof(char) * 1);
 	if (!dst)
 		return (0);
 	va_start(args, str);
@@ -254,7 +300,6 @@ int	ft_printf(const char *str, ...)
 		if (str[j] == '%')
 		{
 			tmp = ft_assign(str, j+1, args);
-			//ft_putstr(tmp);
 			dst = ft_strjoin_gnl(dst, tmp);
 			j++;
 			i = ft_strlen(dst) - 1;
@@ -275,11 +320,11 @@ int	main()
 	const char	*str = "abcde";
 	char ch;
 	int	num = 123;
-	unsigned int un = -1;
+	unsigned int un = -456;
 
 	ch = 'a';
-	ft_printf("stampami :\n %i\n %%\n %c\n %s\n %c\n %u\n", num, ch, str, ch, un);
-	printf("Printf : %u\n", un);
-	ft_printf("My Printf : %u", un);
+	ft_printf("stampami :\n %i\n %d\n %%\n %c\n %s\n %u\n %x\n %X\n", num, num, ch, str, un, un, un);
+	//printf("Printf : %X\n", un);
+	//ft_printf("My Printf : %X\n", un);
 	return (0);
 }

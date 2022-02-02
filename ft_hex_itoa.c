@@ -16,27 +16,12 @@ static int	ft_hex_intlen(unsigned int n)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while ((n / 16) >= 0)
 	{
 		i++;
 	}
 	return (i);
-}
-
-static unsigned int	ft_unsigned_div(unsigned int len)
-{
-	int	div;
-
-	div = 1;
-	if (len == 1)
-		return (1);
-	while (len > 1)
-	{
-		div *= 10;
-		len--;
-	}
-	return (div);
 }
 
 char	*ft_hex_itoa(unsigned int n, char *base)
@@ -54,7 +39,7 @@ char	*ft_hex_itoa(unsigned int n, char *base)
 		return (NULL);
 	while (len)
 	{
-		dest[len] = ((n / ft_unsigned_div(len)) % 10) + 48;
+		dest[len] = base[((n / 16) % 16)];
 		len--;
 		i++;
 	}
