@@ -22,11 +22,11 @@ int	ft_putstr(char *s)
 	int	i;
 
 	i = 0;
-	if (s == NULL)
-		return (i);
+	if (!s)
+		s = "(null)";
 	while (*s != '\0')
 	{
-		i += write(1, &*s, 1);
+		i += ft_putchar(*s);
 		s++;
 	}
 	return (i);

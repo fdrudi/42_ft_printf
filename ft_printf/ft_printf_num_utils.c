@@ -42,7 +42,7 @@ int	ft_hex_putnbr(unsigned int n, char *hex)
 
 int	ft_point_print(unsigned long n, char *hex)
 {
-	int				i;
+	int	i;
 
 	i = 0;
 	if (n >= 16)
@@ -56,6 +56,8 @@ int	ft_point_putnbr(unsigned long n, char *hex)
 	int	i;
 
 	i = 2;
+	if (!n)
+		return (ft_putstr("(nil)"));
 	ft_putchar('0');
 	ft_putchar('x');
 

@@ -44,6 +44,8 @@ int	ft_printf(const char *str, ...)
 
 	j = 0;
 	len = 0;
+	if (!str)
+		return (0);
 	va_start(args, str);
 	while (str[j] != '\0')
 	{
@@ -59,20 +61,20 @@ int	ft_printf(const char *str, ...)
 	va_end(args);
 	return (len);
 }
-
-/*int	main()
+/*
+int	main()
 {
-	const char	*str = "abcde";
-	char ch;
-	int	num = 123;
-	unsigned int un = -1456;
+	//const char	*str = "abd";
+	//char ch;
+	//int	num = 123;
+	//unsigned int un = -1456;
 	int i = 0;
 
-	ch = 'a';
-	//ft_printf("mine : %p\n", str);
-	//i = printf("real : %p\n", str);
-	ft_printf("stampami :\n %p\n %i\n %d\n %c\n %s\n %x\n %X\n %u\n", str, num, num, ch, str, un, un, un);
-	i = printf("stampami :\n %p\n %i\n %d\n %c\n %s\n %x\n %X\n %u\n", str, num, num, ch, str, un, un, un);
+	//ch = 'a';
+	ft_printf("mine : %p\n", str);
+	i = printf("real : %p\n", str);
+	//ft_printf("stampami :\n %p\n %i\n %d\n %c\n %s\n %x\n %X\n %u\n", str, num, num, ch, str, un, un, un);
+	//i = printf("stampami :\n %p\n %i\n %d\n %c\n %s\n %x\n %X\n %u\n", str, num, num, ch, str, un, un, un);
 	printf("\nreal len : %d", i);
 	//ft_printf("My Printf : %p\n", str);
 	return (0);
