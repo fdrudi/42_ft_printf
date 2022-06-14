@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fdrudi <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/02/02 16:47:54 by fdrudi            #+#    #+#              #
-#    Updated: 2022/02/02 16:47:54 by fdrudi           ###   ########.fr        #
+#    Created: 2022/02/02 19:42:41 by fdrudi            #+#    #+#              #
+#    Updated: 2022/02/02 19:42:41 by fdrudi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		=	ft_printf.c\
+SRCS		=	fd_printf.c fd_printf_utils.c fd_printf_num_utils.c\
 
 OBJS		=	${SRCS:.c=.o}
 
